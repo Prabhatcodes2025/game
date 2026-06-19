@@ -1,4 +1,5 @@
 import { createElement } from 'react'
+import { Link } from 'react-router-dom'
 import {
   ContactRound,
   Facebook,
@@ -76,13 +77,13 @@ export default function Footer() {
         <p className="text-base font-semibold sm:text-2xl">
           Copyright © All Yono App All Rights Reserved
         </p>
-        <a
-          href="/admin-login"
+        <Link
+          to="/admin-login"
           className="mt-4 inline-flex items-center gap-2 rounded-lg border border-slate-500 px-3 py-2 text-xs font-bold text-slate-300 transition hover:border-white hover:text-white"
         >
           <LogIn size={15} />
           Login as Admin
-        </a>
+        </Link>
       </div>
     </footer>
   )

@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import {
   ArrowLeft,
   ImagePlus,
@@ -34,6 +35,7 @@ function createId() {
 }
 
 export default function Admin() {
+  const navigate = useNavigate()
   const apps = useApps()
   const [form, setForm] = useState(emptyForm)
   const [editingId, setEditingId] = useState(null)
@@ -126,7 +128,7 @@ export default function Admin() {
 
   const handleLogout = () => {
     logoutAdmin()
-    window.location.replace('/admin-login')
+    navigate('/admin-login', { replace: true })
   }
 
   return (
@@ -140,13 +142,13 @@ export default function Admin() {
             <h1 className="text-xl font-extrabold sm:text-2xl">App Admin</h1>
           </div>
           <div className="flex items-center gap-2">
-            <a
-              href="/"
+            <Link
+              to="/"
               className="inline-flex items-center gap-2 rounded-lg border border-slate-300 px-3 py-2 text-sm font-bold hover:bg-slate-50"
             >
               <ArrowLeft size={17} />
               <span className="hidden sm:inline">Homepage</span>
-            </a>
+            </Link>
             <button
               type="button"
               onClick={handleLogout}

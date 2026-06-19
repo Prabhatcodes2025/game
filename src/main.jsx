@@ -1,26 +1,20 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import App from './App'
-import Admin from './Admin'
 import AdminLogin from './AdminLogin'
-import { isAdminLoggedIn } from './auth'
+import ProtectedAdmin from './ProtectedAdmin'
 import './index.css'
-
-const path = window.location.pathname
-
-if (path === '/admin' && !isAdminLoggedIn()) {
-  window.location.replace('/admin-login')
-}
-
-const Page =
-  path === '/admin'
-    ? Admin
-    : path === '/admin-login'
-      ? AdminLogin
-      : App
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <Page />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<App />} />
+        <Route path="/admin-login" element={<AdminLogin />} />
+        <Route path="/admin" element={<ProtectedAdmin />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </BrowserRouter>
   </StrictMode>,
 )

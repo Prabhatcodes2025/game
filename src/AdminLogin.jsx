@@ -1,16 +1,17 @@
 import { useState } from 'react'
 import { ArrowLeft, Eye, EyeOff, LockKeyhole, LogIn, User } from 'lucide-react'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { isAdminLoggedIn, loginAdmin } from './auth'
 
 export default function AdminLogin() {
+  const navigate = useNavigate()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState('')
 
   if (isAdminLoggedIn()) {
-    window.location.replace('/admin')
-    return null
+    return <Navigate to="/admin" replace />
   }
 
   const handleSubmit = (event) => {
@@ -25,19 +26,19 @@ export default function AdminLogin() {
       return
     }
 
-    window.location.replace('/admin')
+    navigate('/admin', { replace: true })
   }
 
   return (
     <main className="grid min-h-screen place-items-center bg-slate-100 px-4 py-10">
       <section className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-6 shadow-lg sm:p-8">
-        <a
-          href="/"
+        <Link
+          to="/"
           className="inline-flex items-center gap-2 text-sm font-bold text-slate-500 transition hover:text-brand-600"
         >
           <ArrowLeft size={17} />
           Back to homepage
-        </a>
+        </Link>
 
         <div className="mt-7 text-center">
           <span className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-brand-600 text-white shadow-soft">
