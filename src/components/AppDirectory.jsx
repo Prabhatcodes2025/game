@@ -1,7 +1,5 @@
 import { Download } from 'lucide-react'
-import { apps } from '../data'
-
-const newReferenceApps = apps.filter((app) => app.icon)
+import { useApps } from '../appStore'
 
 function AppGridCard({ app }) {
   return (
@@ -42,7 +40,9 @@ function AppGridCard({ app }) {
       </div>
 
       <a
-        href="#download-notice"
+        href={app.downloadUrl}
+        target={app.downloadUrl.startsWith('http') ? '_blank' : undefined}
+        rel={app.downloadUrl.startsWith('http') ? 'noreferrer' : undefined}
         className="mt-3 inline-flex w-full items-center justify-center gap-1.5 rounded-md bg-green-600 px-2 py-2.5 text-[11px] font-extrabold text-white transition hover:bg-green-700 sm:text-xs"
         aria-label={`Download ${app.name}`}
       >
@@ -68,13 +68,17 @@ function SectionHeading({ children }) {
 }
 
 export default function AppDirectory() {
+  const apps = useApps()
+  const allApps = apps.filter((app) => app.section === 'all')
+  const newApps = apps.filter((app) => app.section === 'new')
+
   return (
     <div className="bg-white">
       <section id="apps" className="pb-9 pt-4 sm:pb-12 sm:pt-6">
         <div className="mx-auto max-w-6xl px-3 sm:px-6">
           <SectionHeading>ALL APPS</SectionHeading>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 md:grid-cols-4 lg:grid-cols-5">
-            {apps.map((app) => (
+            {allApps.map((app) => (
               <AppGridCard key={app.name} app={app} />
             ))}
           </div>
@@ -85,7 +89,7 @@ export default function AppDirectory() {
         <div className="mx-auto max-w-6xl px-3 sm:px-6">
           <SectionHeading>NEW APPS</SectionHeading>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 md:grid-cols-4 lg:grid-cols-5">
-            {newReferenceApps.map((app) => (
+            {newApps.map((app) => (
               <AppGridCard key={`new-${app.name}`} app={app} />
             ))}
           </div>

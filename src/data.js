@@ -1,4 +1,4 @@
-export const apps = [
+const appSeed = [
   {
     name: 'Jaiho Rummy',
     bonus: '₹50',
@@ -121,6 +121,13 @@ export const apps = [
     isNew: true,
   },
 ]
+
+export const defaultApps = appSeed.map((app, index) => ({
+  ...app,
+  id: `demo-app-${index + 1}`,
+  section: app.icon ? 'new' : 'all',
+  downloadUrl: '#download-notice',
+}))
 
 export const categories = [
   {
